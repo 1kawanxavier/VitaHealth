@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "176768629207",
+    "firebase_url": "https://vitahealth-b56b2-default-rtdb.firebaseio.com",
+    "project_id": "vitahealth-b56b2",
+    "storage_bucket": "vitahealth-b56b2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:176768629207:android:b3174638883f8d36e1b392",
+        "android_client_info": {
+          "package_name": "com.example.crudfirebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD32MK4o7tT39kAi_eZ1HblMxqzcZUbyb8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:176768629207:android:82161964c3da613fe1b392",
+        "android_client_info": {
+          "package_name": "com.example.vitahealth"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD32MK4o7tT39kAi_eZ1HblMxqzcZUbyb8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
