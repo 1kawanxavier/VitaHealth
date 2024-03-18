@@ -1,8 +1,8 @@
-import 'package:crudfirebase/servicos/autenticacao_servico.dart';
+import 'package:crudfirebase/database/db.dart';
 import 'package:flutter/material.dart';
 
 class CadastraUsuario extends StatelessWidget {
-  const CadastraUsuario({Key? key});
+  const CadastraUsuario({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,8 +12,6 @@ class CadastraUsuario extends StatelessWidget {
     TextEditingController usuarioController = TextEditingController();
     TextEditingController senhaController = TextEditingController();
 
-
-    AutenticacaoServico _autenticacaoServico = AutenticacaoServico();
     return Scaffold(
       appBar: AppBar(title: Text('Cadastro de Usuário')),
 
@@ -41,7 +39,7 @@ class CadastraUsuario extends StatelessWidget {
               SizedBox(height: 30,),
 
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   String nome = nomeController.text;
                   String email = emailController.text;
                   String celular = celularController.text;
@@ -54,7 +52,27 @@ class CadastraUsuario extends StatelessWidget {
                   print('Usuário: $usuario');
                   print('Senha: $senha');
 
-                  _autenticacaoServico.cadastrarUsuario(nome: nome, email: email, celular: celular, usuario: usuario, senha: senha);
+                  // Obtendo a instância do banco de dados
+                  final database = await DB.instance.database;
+
+                  // Inserindo os dados na tabela perfil
+                  await database!.insert('perfil', {
+                    'nome': nome,
+                    'email': email,
+                    'celular': celular,
+                    'usuario': usuario,
+                    'senha': senha,
+                    'acesso': 0
+                  });
+
+                  print('Usuário cadastrado com sucesso.');
+
+                  // Limpar os campos após cadastrar
+                  nomeController.clear();
+                  emailController.clear();
+                  celularController.clear();
+                  usuarioController.clear();
+                  senhaController.clear();
                 },
                 child: Text('Cadastrar'),
               ),

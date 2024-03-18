@@ -1,11 +1,8 @@
-import 'package:crudfirebase/widgets/LoginButton.dart';
 import 'package:flutter/material.dart';
-import 'package:crudfirebase/servicos/autenticacao_servico.dart';
-
+import 'package:crudfirebase/database/db.dart'; 
 class LoginPage extends StatelessWidget {
   final TextEditingController usuarioController = TextEditingController();
   final TextEditingController senhaController = TextEditingController();
-  final AutenticacaoServico _autenticacaoServico = AutenticacaoServico();
 
   LoginPage({Key? key}) : super(key: key);
 
@@ -39,19 +36,31 @@ class LoginPage extends StatelessWidget {
               String senha = senhaController.text; 
               print(usuario);
               print(senha);
-              String? error = await _autenticacaoServico.logarUsuario(email: usuario, senha: senha);
-              if(error == null) {
-                print('Logado com sucesso');
+
+              // Verifica as credenciais no banco de dados SQLite
+              bool loginValido = await _verificarCredenciais(usuario, senha);
+              if(loginValido) {
+                print('Login realizado com sucesso');
               } else {
-                print('Deu ruim ');
+                print('Usuário ou senha inválidos');
               }
             },
             child: Text('Acessar'),
           ),
-          SizedBox(height: 20),
-          ButtonCriar(),
         ],
       ),
     );
+  }
+
+  Future<bool> _verificarCredenciais(String usuario, String senha) async {
+    // Obtenha a instância do banco de dados
+    final database = await DB.instance.database;
+
+    // Realize a consulta para verificar se as credenciais estão corretas
+    List<Map<String, dynamic>> result = await database!.query('perfil',
+        where: 'usuario = ? AND senha = ?', whereArgs: [usuario, senha]);
+
+    // Se houver algum resultado, significa que as credenciais estão corretas
+    return result.isNotEmpty;
   }
 }
